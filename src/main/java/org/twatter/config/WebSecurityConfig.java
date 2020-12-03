@@ -16,13 +16,13 @@ import org.twatter.service.UserService;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    private UserService userService;
+    private UserService userSevice;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/registration").permitAll()
+                .antMatchers("/", "/registration", "/static/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -35,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService)
+        auth.userDetailsService(userSevice)
                 .passwordEncoder(NoOpPasswordEncoder.getInstance());
     }
 }
